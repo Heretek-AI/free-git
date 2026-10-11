@@ -49,8 +49,10 @@ services:
       - /etc/localtime:/etc/localtime:ro
     # Loopback-only: public HTTP goes via Cloudflare Tunnel, not open ports.
     # 2222 = LAN Git-over-SSH (Tunnel does not forward SSH by default).
+    # Host port is 3001 because 3000 is taken on this host by npmplus (host-network mode).
+    # Container port stays 3000, so the Tunnel origin http://server:3000 is unchanged.
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:3001:3000"
       - "2222:22"
     networks:
       - free-git

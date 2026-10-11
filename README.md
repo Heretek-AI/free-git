@@ -34,7 +34,7 @@ Mirror setup: open `https://mirror.free-git.org`, first signup = admin, add GitH
 
 ## 3. Notes / limits
 
-- Compose publishes `3000`/`4321` on `127.0.0.1` only. Public traffic comes through the Tunnel container on the same `free-git` network.
+- Compose publishes `3001`/`4321` on `127.0.0.1` only. Public traffic comes through the Tunnel container on the same `free-git` network.
 - Git SSH (`2222:22`) is LAN-only. Cloudflare Tunnel forwards HTTP(S); SSH needs separate `cloudflared access ssh` setup. Use HTTPS clone URLs remotely.
 - Runner uses DIND (`privileged: true`). If the host forbids privileged, use `gitea/runner:latest` + `- /var/run/docker.sock:/var/run/docker.sock` (less isolated).
 - `ROOT_URL=https://free-git.org/` must be set before first boot; changing it later requires editing `app.ini` inside `gitea-data`, not just env.
