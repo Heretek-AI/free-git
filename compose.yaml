@@ -1,0 +1,115 @@
+# Single-project stack for free-git.org.
+# Arcane entrypoint: this file (compose.yaml is canonical, preferred over docker-compose.yml).
+# Secrets come from `.env` (local) / Arcane Environment Configuration (remote).
+# Public hostnames are configured in the Cloudflare Zero Trust dashboard, not here:
+#   free-git.org          -> http://server:3000
+#   mirror.free-git.org   -> http://mirror:4321
+
+services:
+  db:
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: gitea
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: gitea
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - free-git
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gitea -d gitea"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  server:
+    image: docker.gitea.com/gitea:1
+    container_name: gitea
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      USER_UID: "1000"
+      USER_GID: "1000"
+      GITEA__database__DB_TYPE: postgres
+      GITEA__database__HOST: db:5432
+      GITEA__database__NAME: gitea
+      GITEA__database__USER: gitea
+      GITEA__database__PASSWD: ${POSTGRES_PASSWORD}
+      GITEA__server__DOMAIN: free-git.org
+      GITEA__server__ROOT_URL: https://free-git.org/
+      GITEA__server__SSH_DOMAIN: free-git.org
+      GITEA__server__SSH_PORT: "222"
+      GITEA__actions__ENABLED: "true"
+    volumes:
+      - gitea-data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    # Loopback-only: public HTTP goes via Cloudflare Tunnel, not open ports.
+    # 2222 = LAN Git-over-SSH (Tunnel does not forward SSH by default).
+    ports:
+      - "127.0.0.1:3000:3000"
+      - "2222:22"
+    networks:
+      - free-git
+
+  runner:
+    # DIND = isolated Docker daemon for jobs. Needs privileged.
+    # If Arcane host forbids privileged, switch to gitea/runner:latest
+    # with /var/run/docker.sock mounted (less isolated).
+    image: gitea/runner:latest-dind
+    container_name: gitea-runner
+    restart: unless-stopped
+    privileged: true
+    depends_on:
+      - server
+    environment:
+      GITEA_INSTANCE_URL: https://free-git.org
+      GITEA_RUNNER_REGISTRATION_TOKEN: ${RUNNER_TOKEN}
+      GITEA_RUNNER_NAME: free-git-runner-1
+    volumes:
+      - runner-data:/data
+      - runner-docker:/var/lib/docker
+    networks:
+      - free-git
+
+  mirror:
+    image: ghcr.io/raylabshq/gitea-mirror:latest
+    container_name: gitea-mirror
+    restart: unless-stopped
+    environment:
+      PORT: "4321"
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
+    volumes:
+      - mirror-data:/app/data
+    ports:
+      - "127.0.0.1:4321:4321"
+    networks:
+      - free-git
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: free-git-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      - server
+      - mirror
+    networks:
+      - free-git
+
+networks:
+  free-git:
+    driver: bridge
+
+volumes:
+  pgdata:
+  gitea-data:
+  runner-data:
+  runner-docker:
+  mirror-data:
