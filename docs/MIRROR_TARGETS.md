@@ -581,3 +581,16 @@ counted in VFIO & homelab infra — not repeated.)
 3. Forge layer: `go-gitea/gitea`, `forgejo/forgejo` (self-reference is good hygiene).
 4. Daily drivers: `jellyfin`, `immich`, `headscale`, `traefik`, `uptime-kuma`, `n8n`.
 5. Then one full category per sync batch.
+
+## Import status (2026-10-11)
+
+Bulk-imported into gitea-mirror: **470 of 489 queued for mirroring** (19 batches, all accepted).
+These 19 were rejected by the GitHub lookup (renamed/moved upstream or lookup miss) and need
+corrected `owner/name` before retrying:
+
+- kyutai/moshi, weightsandbiases/wandb, BinaryAnalysisPlatform/triton, drakvuf/drakvuf,
+  PabloMK7/citra, ryujinx-mirror/ryujinx (500 from app), GreemDev/Ryujinx, citron-emu/citron,
+  torzu-emu/torzu, mataesu/pegasus-frontend, ruffle/ruffle, Snes9x/snes9x (canonical is
+  snes9xgit/snes9x), devmiyax/yabasanshiro, flycastemu/flycast, shiiion/dolphin-primehack,
+  dgtlmoon/changedetection-io, sunshine-stream/Sunshine, git-extras/git-extras,
+  forgejo/forgejo (canonical is Codeberg-hosted).
