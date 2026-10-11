@@ -3,8 +3,8 @@
 Compiled 2026-10-11. Star counts are approximate (Oct 2026) and drift fast — treat as ranking signal only.
 Every repo below was individually verified to exist and be active. Closed-source tools excluded throughout.
 
-Counts: AI/ML 97 · Reverse engineering 84 · Emulation 73 · Engines & modding 39 ·
-Self-hosted 64 · VFIO & homelab infra 59 · Dev tools 62 · Privacy & networking 46 = **524 unique**.
+Counts: AI/ML 92 · Reverse engineering 83 · Emulation 73 · Engines & modding 38 ·
+Self-hosted 60 · VFIO & homelab infra 48 · Dev tools 57 · Privacy & networking 44 = **495 unique**.
 
 ## How to mirror this with gitea-mirror
 
@@ -22,7 +22,7 @@ Self-hosted 64 · VFIO & homelab infra 59 · Dev tools 62 · Privacy & networkin
 - License flags: AGPL-3.0 (`stable-diffusion-webui`), BSL-1.1 (`weaviate`), Elastic-2.0 parts
   (`phoenix`) — fine to mirror internally; review before exposing anything as a public service.
 
-## 1. AI / ML (97)
+## 1. AI / ML (92)
 
 | Repo | Stars | Why it matters |
 |---|---|---|
@@ -119,7 +119,7 @@ Self-hosted 64 · VFIO & homelab infra 59 · Dev tools 62 · Privacy & networkin
 | kubeflow/kubeflow | ~15k | K8s ML pipelines + training operators |
 | bentoml/BentoML | ~8k | Model serving + BentoCloud self-host |
 
-## 2. Reverse engineering (84)
+## 2. Reverse engineering (83)
 
 | Repo | Stars | Why it matters |
 |---|---|---|
@@ -288,7 +288,7 @@ DMCA/settlement-removed — do not mirror those names as canonical. Mirror the l
 | PCSX2/pcsx2_patches | ~0.37k | Widescreen/no-interlace patch DB |
 | Vita3K/compatibility | ~0.2k | Vita compat DB, useful for curation |
 
-## 4. Game engines, modding & creative tools (39)
+## 4. Game engines, modding & creative tools (38)
 
 (scummvm/scummvm and dosbox-staging/dosbox-staging counted in Emulation — not repeated.)
 
@@ -333,7 +333,7 @@ DMCA/settlement-removed — do not mirror those names as canonical. Mirror the l
 | CorsixTH/CorsixTH | ~1.5k | Theme Hospital reimplementation in Lua/C++ |
 | gemrb/gemrb | ~1.5k | Infinity Engine (Baldur's Gate/Icewind Dale) reimplementation |
 
-## 5. Self-hosted apps (64)
+## 5. Self-hosted apps (60)
 
 | Repo | Stars | Why it matters |
 |---|---|---|
@@ -398,7 +398,7 @@ DMCA/settlement-removed — do not mirror those names as canonical. Mirror the l
 | owncloud/ocis | ~4k | Go-based ownCloud Infinite Scale — fast, lightweight EFSS |
 | Readarr/Readarr | ~3k | Ebook/audiobook *arr manager |
 
-## 6. VFIO, passthrough & homelab infra (59)
+## 6. VFIO, passthrough & homelab infra (48)
 
 (qemu/qemu counted in Emulation — not repeated.)
 
@@ -458,7 +458,7 @@ Priority mirror picks for Gitea: `community-scripts/ProxmoxVE`, `gnif/LookingGla
 `truenas/middleware`, `runtipi/runtipi`, `azukaar/Cosmos-Server`, and the NixOS trio
 (`home-manager`, `disko`, `sops-nix`) — highest homelab-specific value per byte.
 
-## 7. Dev tools (62)
+## 7. Dev tools (57)
 
 (ollama/ollama, open-webui/open-webui, Aider-AI/aider, continuedev/continue counted in AI/ML — not repeated.)
 
@@ -522,7 +522,7 @@ Priority mirror picks for Gitea: `community-scripts/ProxmoxVE`, `gnif/LookingGla
 | carapace-sh/carapace-bin | ~2k | Universal shell completer bridging cobra/argparse CLIs |
 | facebook/docusaurus | ~61k | React docs sites with versioning/blog/search, the default for OSS docs |
 
-## 8. Privacy, security & networking (46)
+## 8. Privacy, security & networking (44)
 
 (tailscale/tailscale, juanfont/headscale, netbirdio/netbird, zerotier/ZeroTierOne
 counted in VFIO & homelab infra — not repeated.)
