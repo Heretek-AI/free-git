@@ -2,3 +2,5 @@
 *.dump
 *.sql
 *.tar.gz
+# Local cf CLI state (auth tokens, account cache) — never commit.
+.cloudflare/
